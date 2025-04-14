@@ -12,7 +12,12 @@ admin_user = "admin"  # ใส่ชื่อผู้ใช้งานแอ�
 admin_pass = "3770"  # ใส่รหัสผ่านแอดมินจริง
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
+def index():
+    return render_template("index.html")
+
+
+@app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form['username']
@@ -90,6 +95,13 @@ def charedit():
         return res.text
 
     return render_template("charedit.html")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    session.pop('session_data', None)
+    return redirect('/')
 
 
 if __name__ == "__main__":
