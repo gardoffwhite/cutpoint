@@ -6,11 +6,10 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
 # ข้อมูลล็อกอิน
-login_url = "http://nage-warzone.com/admin/?logout=session_id()"  # เปลี่ยน URL ตามที่ได้มา
+login_url = "http://nage-warzone.com/admin/index.php"  # URL ที่ถูกต้องจากฟอร์ม
 edit_url = "http://nage-warzone.com/admin/charedit.php"
 admin_user = "admin"  # ใส่ชื่อผู้ใช้งานแอดมินจริง
 admin_pass = "3770"  # ใส่รหัสผ่านแอดมินจริง
-
 
 @app.route('/', methods=["GET", "POST"])
 def login():
@@ -23,14 +22,14 @@ def login():
 
         # ล็อกอินโดยใช้ requests
         res = session_data.post(login_url, data={
-            "username": admin_user,
-            "password": admin_pass,
-            "submit": "Submit"
+            "username": username,  # ส่งค่า username จากฟอร์ม
+            "password": password,  # ส่งค่า password จากฟอร์ม
+            "submit": "Submit"  # ส่งค่า submit ไปด้วย
         })
 
         # DEBUG: พิมพ์ response มาดูผล
         print("Login Status Code:", res.status_code)
-        print("Login Response Snippet:", res.text[:500])
+        print("Login Response Snippet:", res.text[:500])  # พิมพ์เฉพาะส่วนแรกของข้อความ
 
         # ตรวจสอบว่ามีข้อความ 'Logout' ใน response หรือไม่
         if "Logout" in res.text:
@@ -38,6 +37,7 @@ def login():
             session["session_data"] = session_data.cookies.get_dict()
             return redirect("/charedit")
 
+        # หากล็อกอินล้มเหลวให้แสดงข้อความ
         return render_template("login.html", error="Login Failed")
 
     return render_template("login.html")
