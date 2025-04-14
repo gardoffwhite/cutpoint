@@ -9,7 +9,7 @@ app.secret_key = os.getenv("SECRET_KEY")
 login_url = "http://nage-warzone.com/admin/index.php"
 edit_url = "http://nage-warzone.com/admin/charedit.php"
 admin_user = "admin"  # ใส่ชื่อผู้ใช้งานแอดมินจริง
-admin_pass = "your_password_here"  # ใส่รหัสผ่านแอดมินจริง
+admin_pass = "3770"  # ใส่รหัสผ่านแอดมินจริง
 
 
 @app.route('/', methods=["GET", "POST"])
