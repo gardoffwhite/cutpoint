@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, session, redirect
 import requests
 import os
+import time  # สำหรับการหน่วงเวลา
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
 # ข้อมูลล็อกอิน
-login_url = "http://nage-warzone.com/admin/index.php#"  # URL ที่ถูกต้องจากฟอร์ม
+login_url = "http://nage-warzone.com/admin/"  # URL ที่ถูกต้องจากฟอร์ม
 edit_url = "http://nage-warzone.com/admin/charedit.php"
 admin_user = "admin"  # ใส่ชื่อผู้ใช้งานแอดมินจริง
 admin_pass = "3770"  # ใส่รหัสผ่านแอดมินจริง
@@ -30,6 +31,9 @@ def login():
         # DEBUG: พิมพ์ response มาดูผล
         print("Login Status Code:", res.status_code)
         print("Login Response Snippet:", res.text[:500])  # พิมพ์เฉพาะส่วนแรกของข้อความ
+
+        # หน่วงเวลาเล็กน้อยเพื่อให้ระบบตรวจสอบเสร็จสมบูรณ์
+        time.sleep(3)
 
         # ตรวจสอบว่ามีข้อความ 'Logout' ใน response หรือไม่
         if "Logout" in res.text:
