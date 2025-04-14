@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
 # ข้อมูลล็อกอิน
-login_url = "http://nage-warzone.com/admin/index.php"  # URL ที่ถูกต้องจากฟอร์ม
+login_url = "http://nage-warzone.com/admin/index.php#"  # URL ที่ถูกต้องจากฟอร์ม
 edit_url = "http://nage-warzone.com/admin/charedit.php"
 admin_user = "admin"  # ใส่ชื่อผู้ใช้งานแอดมินจริง
 admin_pass = "3770"  # ใส่รหัสผ่านแอดมินจริง
