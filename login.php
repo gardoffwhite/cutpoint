@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
 
     // เช็ค username และ password (ใส่ข้อมูลจริงของแอดมินตรงนี้)
-    if ($username === "admin" && $password === "your_password_here") {
+    if ($username === "admin" && $password === "3770") {
         $_SESSION["logged_in"] = true;
         header("Location: index.html");
         exit;
