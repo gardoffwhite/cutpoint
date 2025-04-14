@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, session, redirect
 import requests
+import os
 
 app = Flask(__name__)
-app.secret_key = "your-secret-key"  # ใช้อะไรก็ได้
+app.secret_key = os.getenv("SECRET_KEY")
+
+
 
 @app.route('/', methods=["GET", "POST"])
 def login():
