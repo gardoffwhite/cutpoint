@@ -1,0 +1,28 @@
+<?php
+session_start();
+if (!isset($_SESSION["logged_in"])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Character Editor</title></head>
+<body>
+<h2>ส่งข้อมูลตัวละคร</h2>
+<form method="POST" action="process.php">
+    <label>ชื่อตัวละคร:</label><br>
+    <input type="text" name="charname" required><br><br>
+
+    <label>STR:</label><input type="number" name="str" value="0"><br>
+    <label>DEX:</label><input type="number" name="dex" value="0"><br>
+    <label>INT:</label><input type="number" name="int" value="0"><br>
+    <label>Money:</label><input type="number" name="money" value="0"><br>
+    <!-- เพิ่มช่องอื่น ๆ ตามที่ต้องการ -->
+    
+    <button type="submit">อัปเดตตัวละคร</button>
+</form>
+<br>
+<a href="logout.php">ออกจากระบบ</a>
+</body>
+</html>
