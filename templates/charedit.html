@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Char Editor</title>
+    <title>Character Edit</title>
 </head>
 <body>
+    <h2>Character Edit</h2>
     <form method="POST">
-        <input name="charname" placeholder="Character Name"><br>
-        <input name="str" placeholder="Strength"><br>
-        <input name="dex" placeholder="Dexterity"><br>
-        <input name="int" placeholder="Intelligence"><br>
-        <input name="money" placeholder="Money"><br>
-        <button type="submit">Submit</button>
+        <label for="charname">Character Name:</label><br>
+        <input type="text" id="charname" name="charname" required><br><br>
+
+        <label for="str">Strength:</label><br>
+        <input type="text" id="str" name="str" required><br><br>
+
+        <label for="dex">Dexterity:</label><br>
+        <input type="text" id="dex" name="dex" required><br><br>
+
+        <label for="int">Intelligence:</label><br>
+        <input type="text" id="int" name="int" required><br><br>
+
+        <label for="money">Money:</label><br>
+        <input type="text" id="money" name="money" required><br><br>
+
+        <button type="submit">Update Character</button>
     </form>
 </body>
 </html>
