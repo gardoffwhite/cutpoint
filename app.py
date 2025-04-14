@@ -6,35 +6,39 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
 # ข้อมูลล็อกอิน
-login_url = "http://nage-warzone.com/admin/?logout=session_id()"
+login_url = "http://nage-warzone.com/admin/?logout=session_id()"  # เปลี่ยน URL ตามที่ได้มา
 edit_url = "http://nage-warzone.com/admin/charedit.php"
 admin_user = "admin"  # ใส่ชื่อผู้ใช้งานแอดมินจริง
-admin_pass = "3770"   # ใส่รหัสผ่านแอดมินจริง
-headers = {
-    "User-Agent": "Mozilla/5.0",
-    "Referer": "http://nage-warzone.com/admin"
-}
+admin_pass = "3770"  # ใส่รหัสผ่านแอดมินจริง
+
 
 @app.route('/', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+
         # เริ่ม session ใหม่
         session_data = requests.Session()
 
-        # ล็อกอินโดยใช้ POST
+        # ล็อกอินโดยใช้ requests
         res = session_data.post(login_url, data={
             "username": admin_user,
             "password": admin_pass,
             "submit": "Submit"
-        }, headers=headers)
+        })
 
-        # ตรวจสอบว่าเราล็อกอินสำเร็จหรือไม่
-        if "Char Editor" in res.text:
+        # DEBUG: พิมพ์ response มาดูผล
+        print("Login Status Code:", res.status_code)
+        print("Login Response Snippet:", res.text[:500])
+
+        # ตรวจสอบว่ามีข้อความ 'Logout' ใน response หรือไม่
+        if "Logout" in res.text:
             session["logged_in"] = True
             session["session_data"] = session_data.cookies.get_dict()
             return redirect("/charedit")
-        else:
-            return render_template("login.html", error="Login Failed")
+
+        return render_template("login.html", error="Login Failed")
 
     return render_template("login.html")
 
@@ -51,17 +55,14 @@ def charedit():
         int_value = request.form['int']
         money_value = request.form['money']
 
-        # ส่งคำขอไปยังเว็บไซต์
         session_data = requests.Session()
         session_data.cookies.update(session["session_data"])
 
-        # Step 1: กรอกชื่อของตัวละคร
         session_data.post(edit_url, data={
             "charname": charname,
             "searchname": "Submit"
         })
 
-        # Step 2: ส่งข้อมูลแก้ไขตัวละคร
         postData = {
             "lv": "",
             "exp": "",
@@ -91,13 +92,6 @@ def charedit():
         return res.text
 
     return render_template("charedit.html")
-
-
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    session.pop('session_data', None)
-    return redirect('/')
 
 
 if __name__ == "__main__":
